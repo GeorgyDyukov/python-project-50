@@ -1,10 +1,4 @@
-import json
-
-
-def read_file(file_path):
-    with open(file_path, 'r') as file:
-        data = json.load(file)
-        return data
+from gendiff_package.file_parser import parser_file
 
 
 def compare_file_contents(data_1, data_2):
@@ -33,8 +27,8 @@ def edit_string(string):
 
 
 def generate_diff(file_path_1, file_path_2):
-    data1 = read_file(file_path_1)
-    data2 = read_file(file_path_2)
+    data1 = parser_file(file_path_1)
+    data2 = parser_file(file_path_2)
     comparison = compare_file_contents(data1, data2)
     result = edit_string(comparison)
     return result
