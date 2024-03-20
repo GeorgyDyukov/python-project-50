@@ -1,4 +1,4 @@
-from gendiff_package.file_parser import parser_file
+from gendiff_package.parser import parser_file
 
 
 def compare_file_contents(data_1, data_2):
