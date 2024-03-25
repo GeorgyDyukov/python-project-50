@@ -78,4 +78,6 @@ def edit_value(value):
         return '[complex value]'
     elif str(value) in replacements:
         return replacements[str(value)]
+    elif isinstance(value, int):
+        return value
     return f"'{value}'"
