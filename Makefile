@@ -11,7 +11,7 @@ update:
 	pip install --user dist/*.whl --force-reinstall
 
 lint:
-	poetry run flake8 gendiff_package
+	poetry run flake8 gendiff
 
 selfcheck:
 	poetry check
@@ -20,6 +20,6 @@ test:
 	poetry run pytest
 
 test-coverage:
-	poetry run pytest --cov=gendiff_package --cov-report xml
+	poetry run pytest --cov=gendiff --cov-report xml
 
 check: selfcheck test lint

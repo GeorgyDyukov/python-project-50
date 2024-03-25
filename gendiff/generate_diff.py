@@ -1,6 +1,6 @@
-from gendiff_package.parser import parser_file
-from gendiff_package.comparer import compare_data
-from gendiff_package.formatters.formatter_choice import choose_formatter
+from gendiff.parser import parser_file
+from gendiff.comparer import compare_data
+from gendiff.formatters.formatter_choice import choose_formatter
 
 
 def generate_diff(file_path_1, file_path_2, formatter='stylish'):
