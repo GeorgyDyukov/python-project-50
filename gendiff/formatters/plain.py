@@ -54,7 +54,8 @@ def create_status_message(status, path, value):
     elif status == 'changed':
         message = (
             f"Property '{path}' was updated. "
-            f"From {edit_value(value['old'])} to {edit_value(value['new'])}"
+            f"From {edit_value(value['old value'])} to "
+            f"{edit_value(value['new value'])}"
         )
     return message
 

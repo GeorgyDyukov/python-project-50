@@ -37,6 +37,6 @@ def compare_data(dict1, dict2):
         else:
             res[key] = {
                 'status': 'changed',
-                'value': {'old': dict1[key], 'new': dict2[key]}
+                'value': {'old value': dict1[key], 'new value': dict2[key]}
             }
     return res
