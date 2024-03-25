@@ -1,5 +1,6 @@
 import json
 import yaml
+import os
 
 
 def parser_file(file_path):
@@ -17,6 +18,9 @@ def parser_file(file_path):
     Raises:
         ValueError: If the file format is not supported.
     """
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"File '{file_path}' not found.")
+
     if file_path.endswith('.json'):
         with open(file_path, 'r') as file:
             return json.load(file)
