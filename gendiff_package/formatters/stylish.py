@@ -5,12 +5,8 @@ def format_stylish(dct, depth=0, symbol=' ', num_symbols=4):
     indent = (symbol * num_symbols) * depth
     str_lst = []
     for key, val in sorted(dct.items()):
-        if isinstance(val, dict):
-            value = val.get('value', val)
-            status = val.get('status', None)
-        else:
-            value = val
-            status = None
+        value = get_value(val)
+        status = get_status(val)
 
         if status == 'added':
             string = f"{indent}  + {key}: {edit_value(value, depth + 1)}"
@@ -28,16 +24,30 @@ def format_stylish(dct, depth=0, symbol=' ', num_symbols=4):
     return '\n'.join(result)
 
 
+def get_value(data):
+    if isinstance(data, dict):
+        return data.get('value', data)
+    return data
+
+
+def get_status(data):
+    if isinstance(data, dict):
+        return data.get('status', None)
+    return None
+
+
 def edit_value(value, depth):
     if isinstance(value, dict):
-        string = format_stylish(value, depth)
-    else:
-        string = edit_string(str(value))
-    return string
+        return format_stylish(value, depth)
+    return edit_string(str(value))
 
 
 def edit_string(string):
-    new_string = string.replace('True', 'true')
-    new_string = new_string.replace('False', 'false')
-    new_string = new_string.replace('None', 'null')
-    return new_string
+    replacements = {
+        'True': 'true',
+        'False': 'false',
+        'None': 'null'
+    }
+    if string in replacements:
+        return replacements[string]
+    return string

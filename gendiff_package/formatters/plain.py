@@ -1,11 +1,22 @@
 def format_plain(dct, path=''):
+    """
+    The function takes input data and formats it into a plain text format.
+
+    Args:
+        dct (dict): The dictionary containing data to be formatted.
+        path (str): Optional. The path to the current item
+            in the data structure.
+
+    Returns:
+        str: A string containing the formatted data in plain text.
+    """
     str_lst = []
     for key, val in sorted(dct.items()):
         value = get_value(val)
         status = get_status(val)
-        current_path = path + key
+        current_path = f"{path}{key}"
         message = create_status_message(status, current_path, value)
-        if message is not None:
+        if message:
             str_lst.append(message)
     return '\n'.join(str_lst)
 
@@ -19,6 +30,19 @@ def get_status(data):
 
 
 def create_status_message(status, path, value):
+    """
+    The function creates a status message based on the provided status,
+    path, and value.
+
+    Args:
+        status (str): The status of the property ('added', 'deleted',
+            'unchanged', 'changed', 'changed, nested').
+        path (str): The path to the current property in the data structure.
+        value: The value of the property.
+
+    Returns:
+        str or None: The status message if applicable, otherwise None.
+    """
     if status == 'added':
         message = f"Property '{path}' was added with value: {edit_value(value)}"
     elif status == 'deleted':
@@ -36,15 +60,22 @@ def create_status_message(status, path, value):
 
 
 def edit_value(value):
+    """
+    The function edits the provided value for better representation.
+
+    Args:
+        value: The value to be edited.
+
+    Returns:
+        str: The edited value.
+    """
+    replacements = {
+        'True': 'true',
+        'False': 'false',
+        'None': 'null'
+    }
     if isinstance(value, dict):
         return '[complex value]'
-    return edit_string(str(value))
-
-
-def edit_string(string):
-    if string in ('True', 'False', 'None'):
-        string = string.replace('True', 'true')
-        string = string.replace('False', 'false')
-        string = string.replace('None', 'null')
-        return string
-    return f"'{string}'"
+    elif str(value) in replacements:
+        return replacements[str(value)]
+    return f"'{value}'"

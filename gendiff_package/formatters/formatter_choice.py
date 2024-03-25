@@ -4,11 +4,27 @@ from gendiff_package.formatters.json import format_json
 
 
 def choose_formatter(data, formatter='stylish'):
-    if formatter == 'stylish':
-        return format_stylish(data)
-    elif formatter == 'plain':
-        return format_plain(data)
-    elif formatter == 'json':
-        return format_json(data)
-    else:
+    """
+    This function selects the appropriate formatter based on the
+    specified 'formatter' parameter and transforms the provided data
+    into the corresponding format.
+
+    Args:
+        data: The data to be formatted.
+        formatter (str): Optional. Specifies the formatter to use.
+            Available options: 'stylish' (default), 'plain', 'json'.
+
+    Returns:
+        The formatted data according to the chosen formatter.
+
+    If the 'formatter' parameter is not supported, the function raises
+    a ValueError.
+    """
+    formatters = {
+        'stylish': format_stylish,
+        'plain': format_plain,
+        'json': format_json,
+    }
+    if formatter not in formatters:
         raise ValueError('Unsupported formatter.')
+    return formatters[formatter](data)
