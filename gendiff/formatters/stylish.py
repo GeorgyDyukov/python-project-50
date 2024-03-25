@@ -7,17 +7,20 @@ def format_stylish(dct, depth=0, symbol=' ', num_symbols=4):
     for key, val in sorted(dct.items()):
         value = get_value(val)
         status = get_status(val)
+        indent_add = f"{indent}  + {key}"
+        indent_del = f"{indent}  - {key}"
+        indent_unchanged = f"{indent}    {key}"
 
         if status == 'added':
-            string = f"{indent}  + {key}: {edit_value(value, depth + 1)}"
+            string = f"{indent_add}: {edit_value(value, depth + 1)}"
         elif status == 'deleted':
-            string = f"{indent}  - {key}: {edit_value(value, depth + 1)}"
+            string = f"{indent_del}: {edit_value(value, depth + 1)}"
         elif status == 'changed':
-            str_1 = f"{indent}  - {key}: {edit_value(value['old'], depth + 1)}"
-            str_2 = f"{indent}  + {key}: {edit_value(value['new'], depth + 1)}"
+            str_1 = f"{indent_del}: {edit_value(value['old'], depth + 1)}"
+            str_2 = f"{indent_add}: {edit_value(value['new'], depth + 1)}"
             string = f"{str_1}\n{str_2}"
         else:
-            string = f"{indent}    {key}: {edit_value(value, depth + 1)}"
+            string = f"{indent_unchanged}: {edit_value(value, depth + 1)}"
 
         str_lst.append(string)
     result = itertools.chain("{", str_lst, [indent + "}"])
